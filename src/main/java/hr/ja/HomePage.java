@@ -1,6 +1,8 @@
 package hr.ja;
 
+import ch.qos.logback.classic.Logger;
 import hr.ja.lib.*;
+import hr.ja.lib.annotation.Get;
 import hr.ja.model.User;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
@@ -18,11 +20,11 @@ import static hr.ja.lib.TableBrowser.Event.ROW_SELECTED;
 @Slf4j
 public class HomePage extends Page {
 
+    @Get("/")
     public void get(Request req, Response res) {
         Form<User> form = createForm();
         form.onSubmit(user -> {
-
-            log.debug("user ", user);
+            log.debug("user {}", user);
         });
 
         Row row = row(
@@ -34,20 +36,8 @@ public class HomePage extends Page {
               ));
 
         add(row);
+        log.debug("dela dobro");
     }
-
-    public static void main(String[] args) {
-        HomePage page = new HomePage();
-        page.get(null, null);
-
-        log.debug(page.toHtml());
-    }
-
-
-    private static void acceptForm(User user) {
-        log.debug("Submited user {}", user);
-    }
-
 
     private Table<User> createTableData() {
         Table<User> t = new Table<>();
@@ -76,9 +66,17 @@ public class HomePage extends Page {
 
     private Form<User> createForm() {
         Form<User> form = new Form<>();
-        form.add(new TextField(User.Fields.name));
+        form.add(new TextField(User.Fields.name, "Name"));
         form.add(new Button("Save user"));
         return form;
+    }
+
+
+    public static void main(String[] args) {
+        HomePage page = new HomePage();
+        page.get(null, null);
+
+        log.debug(page.toHtml());
     }
 
 

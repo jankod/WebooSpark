@@ -3,19 +3,22 @@ package hr.ja.lib;
 import java.util.function.Consumer;
 
 public class Form<M> extends Widget {
-    public void add(FormField field) {
-    }
 
-    public void onSubmit(Consumer<M> handler) {
+
+    private SubmitHandler<M> submitHandler;
+
+    public void onSubmit(SubmitHandler<M> submitHandler) {
+        //EventManager.
+        this.submitHandler = submitHandler;
     }
 
     @Override
     public String toHtml() {
-
         return """
-                <form>
-                        ovo je forma
-                </form>
-                """;
+              <form action='/form-handle' id='%s' method='post'>
+                      %s
+              </form>
+              """.formatted(getId(), getChildrenHtml());
     }
 }
+

@@ -1,8 +1,21 @@
 package hr.ja.lib;
 
+import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class WebSite {
 
-    public String wrap(String htmlBody) {
+    @Getter
+    private List<PageManager> pages = new ArrayList<>();
+
+    public void add(Class<? extends Page> page) {
+        PageManager pm = new PageManager(page);
+        pages.add(pm);
+    }
+
+    String siteLayout(String htmlBody) {
         return """
               <!doctype html>
               <html lang="en">

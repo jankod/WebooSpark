@@ -1,18 +1,22 @@
 package hr.ja.lib;
 
-import hr.ja.util.FreemarkerUtil;
+import lombok.Getter;
 
 public class Button extends FormField {
+
+    @Getter
+    private final String label;
+
     public Button(String label) {
-        add(new Text(label));
+        this.label = label;
     }
 
     @Override
     public String toHtml() {
 
         return """
-              <button type='button' class='btn btn-primary'><#list children as c>${c}</#list></button>
-              """;
+              <button type='button' class='btn btn-primary'>%s</button>
+              """.formatted(label);
     }
 }
 

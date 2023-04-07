@@ -14,8 +14,4 @@ public class Text extends Widget {
         return label;
     }
 
-    @Override
-    public String toString() {
-        return label;
-    }
 }

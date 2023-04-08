@@ -1,0 +1,1 @@
+console.log("dela 434 "+ new Date())

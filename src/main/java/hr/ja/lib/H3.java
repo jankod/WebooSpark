@@ -1,12 +1,14 @@
 package hr.ja.lib;
 
 public class H3 extends Widget {
-    public H3(String text) {
+    private final String text;
 
+    public H3(String text) {
+        this.text = text;
     }
 
     @Override
     public String toHtml() {
-        return "";
+        return "<h3>%s</h3>".formatted(MyUtil.escape(text));
     }
 }

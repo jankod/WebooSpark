@@ -1,42 +1,46 @@
 package hr.ja;
 
-import ch.qos.logback.classic.Logger;
 import hr.ja.lib.*;
-import hr.ja.lib.annotation.Get;
+import hr.ja.lib.annotation.UrlPath;
 import hr.ja.model.User;
 import lombok.extern.slf4j.Slf4j;
-import spark.Request;
-import spark.Response;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.Consumer;
 
 import static hr.ja.lib.Html.H3;
-import static hr.ja.lib.Layout.col;
-import static hr.ja.lib.Layout.row;
+import static hr.ja.lib.Layout.*;
 import static hr.ja.lib.TableBrowser.Event.ROW_SELECTED;
 
 @Slf4j
 public class HomePage extends Page {
 
-    @Get("/")
-    public void get(Request req, Response res) {
-        Form<User> form = createForm();
-        form.onSubmit(user -> {
-            log.debug("user {}", user);
-        });
+    @UrlPath("/")
+    public PageResponse request() {
 
+        WebSite webSite = Context.site();
+        webSite.setTitle("Home page");
+
+        Form<User> form = createForm();
+
+        if (form.submitetdAndValidated()) {
+            return PageResponse.redirect(new UserPage("User is created"));
+        }
+
+        Table<User> table = createTableData();
         Row row = row(
               col(
-                    new Card("My table", createTableData())
+                    new Card("My table", h3("tu ce biti table"))
               ),
               col(
                     new Card(H3("This is form"), form)
               ));
 
-        add(row);
-        log.debug("dela dobro");
+        Context.site().setTitle("ssdf");
+
+        log.debug("dela dela");
+
+        return PageResponse.show(row);
     }
 
     private Table<User> createTableData() {
@@ -68,16 +72,9 @@ public class HomePage extends Page {
         Form<User> form = new Form<>();
         form.add(new TextField(User.Fields.name, "Name"));
         form.add(new Button("Save user"));
+
+
         return form;
     }
-
-
-    public static void main(String[] args) {
-        HomePage page = new HomePage();
-        page.get(null, null);
-
-        log.debug(page.toHtml());
-    }
-
 
 }

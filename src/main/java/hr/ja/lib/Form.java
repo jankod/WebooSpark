@@ -1,24 +1,35 @@
 package hr.ja.lib;
 
-import java.util.function.Consumer;
+import spark.Request;
 
 public class Form<M> extends Widget {
 
 
-    private SubmitHandler<M> submitHandler;
+    //private SubmitHandler<M> submitHandler;
 
     public void onSubmit(SubmitHandler<M> submitHandler) {
-        //EventManager.
-        this.submitHandler = submitHandler;
+        EventManager.event(this, submitHandler);
+        //  this.submitHandler = submitHandler;
     }
 
     @Override
     public String toHtml() {
+
         return """
               <form action='/form-handle' id='%s' method='post'>
+                            
                       %s
               </form>
               """.formatted(getId(), getChildrenHtml());
+    }
+
+    public boolean submitetdAndValidated() {
+        Request req = Context.request();
+        if (req.requestMethod().equals("POST")) {
+
+        }
+        return true;
+
     }
 }
 

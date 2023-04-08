@@ -10,4 +10,9 @@ public class Layout {
         return new Col(widgets);
     }
 
+
+    public static H3 h3(String text) {
+        return new H3(text);
+    }
+
 }

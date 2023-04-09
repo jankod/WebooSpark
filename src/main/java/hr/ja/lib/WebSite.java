@@ -19,6 +19,7 @@ public class WebSite {
                   <link href="/tabulator/css/tabulator.min.css" rel="stylesheet">
                   <script type="text/javascript" src="/bootstrap-5.3.0-alpha3/bootstrap.bundle.min.js" ></script>
                   <script type="text/javascript" src="/tabulator/js/tabulator.min.js"></script>
+                  <script type="text/javascript" src="/jquery-3.6.4.min.js"></script>
                   <script type="text/javascript" src="/all.js"></script>
                 </head>
                 <body>

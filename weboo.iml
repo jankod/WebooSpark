@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$" dumb="true">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources/public" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/misc" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/resources/public/AdminLTE-3.2.0" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/resources/public/bootstrap-5.2.3" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/resources/public/tabulator" />
+    </content>
+  </component>
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/main/resources/public" relative="/" />
+        </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
+          <root url="file://$MODULE_DIR$/src/main/resources/public" />
+        </sourceRoots>
+      </configuration>
+    </facet>
+  </component>
+</module>

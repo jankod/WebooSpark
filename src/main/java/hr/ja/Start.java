@@ -10,6 +10,7 @@ public class Start {
         WebSite site = new WebSite();
 
         WebooEngine.add(HomePage.class);
+        WebooEngine.add(UserPage.class);
 
         WebooEngine.start(site,8080);
 

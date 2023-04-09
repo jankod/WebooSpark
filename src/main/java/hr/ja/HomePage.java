@@ -4,6 +4,7 @@ import hr.ja.lib.*;
 import hr.ja.lib.annotation.UrlPath;
 import hr.ja.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,21 +12,24 @@ import java.util.Collection;
 import static hr.ja.lib.Html.H3;
 import static hr.ja.lib.Layout.*;
 import static hr.ja.lib.TableBrowser.Event.ROW_SELECTED;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Slf4j
 public class HomePage extends Page {
 
     @UrlPath("/")
     public PageResponse request() {
+        Context.site().setTitle("Home page");
 
-        WebSite webSite = Context.site();
-        webSite.setTitle("Home page");
+        log.debug("param name {}", Context.request().queryParams("name"));
 
         Form<User> form = createForm();
 
-        if (form.submitetdAndValidated()) {
-            return PageResponse.redirect(new UserPage("User is created"));
+        if (form.isSubmitted() && form.isValid()) {
+            log.debug("User name: " + form.getModel().getName());
+            return PageResponse.redirect(UserPage.class, "User is created");
         }
+        log.debug("usrr " + form.getModel());
 
         Table<User> table = createTableData();
         Row row = row(
@@ -38,7 +42,7 @@ public class HomePage extends Page {
 
         Context.site().setTitle("ssdf");
 
-        log.debug("dela dela");
+        log.debug("prikaz home page");
 
         return PageResponse.show(row);
     }
@@ -69,9 +73,19 @@ public class HomePage extends Page {
     }
 
     private Form<User> createForm() {
-        Form<User> form = new Form<>();
-        form.add(new TextField(User.Fields.name, "Name"));
-        form.add(new Button("Save user"));
+        Form<User> form = new Form<>(new User());
+
+        Validator<User> userValidatorLength = u -> StringUtils.length(u.getName()) > 20;
+
+        form.text(User.Fields.name, "Name")
+              .bindToWeb(User::getName)
+              .bindFromWeb((request, user) -> user.setName(request.queryParams("name")))
+//              .validate(model -> isNotEmpty(model.getName()), "Name is empty!")
+              .validate(userValidatorLength, "Length is more than 20")
+              .validateNotEmpty("Name is empty");
+
+
+        form.add(new SubmitButton("Save user"));
 
 
         return form;

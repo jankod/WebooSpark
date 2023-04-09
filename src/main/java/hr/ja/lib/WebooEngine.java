@@ -1,5 +1,9 @@
 package hr.ja.lib;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import spark.Request;
@@ -13,10 +17,19 @@ import static spark.Spark.*;
 
 @Slf4j
 public class WebooEngine {
+
+
     private static WebSite site = new WebSite();
 
     @Getter
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+
+    @Getter
     private static List<PageManager> pages = new ArrayList<>();
+
+    @Getter
+    private static Validator validator;
 
     public static void add(Class<? extends Page> page) {
         PageManager pm = new PageManager(page);
@@ -37,14 +50,25 @@ public class WebooEngine {
         }
 
         log.debug("http://localhost:" + port);
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
     private static Object handlePageRequest(PageManager page, Request request, Response response) {
         Context.set(request, response, site);
-
         PageResponse pageResponse = page.createInstance().request();
-//        String pageBodyHtml = page.getPageBodyHtml(request, response);
-//        return WebooEngine.site.siteLayout(pageBodyHtml);
         return pageResponse.doResponse();
+    }
+
+    public static String getUrlPath(Class<? extends Page> page) {
+        for (PageManager pageManager : pages) {
+            Class<? extends Page> page1 = pageManager.getPage();
+            if (page1.equals(page)) {
+                return pageManager.getUrlPath();
+            }
+        }
+        log.warn("Cannot find page url for page {}", page);
+        return "???";
     }
 }

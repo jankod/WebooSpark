@@ -11,16 +11,9 @@ public abstract class Page {
 
 
     public abstract PageResponse request();
-//    @Getter
-//    private final List<Widget> widgetList = new ArrayList<>();
-//
-//    public void add(Widget... widgets) {
-//        Collections.addAll(widgetList, widgets);
-//    }
-//
-//
-//    public String toHtml() {
-//      return MyUtil.toHtml(widgetList);
-//    }
+
+    public PageResponse show(Widget widget) {
+        return PageResponse.show(widget);
+    }
 
 }

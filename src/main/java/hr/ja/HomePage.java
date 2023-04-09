@@ -9,10 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static hr.ja.lib.Html.H3;
+import static hr.ja.lib.HtmlUtil.H3;
 import static hr.ja.lib.Layout.*;
 import static hr.ja.lib.TableBrowser.Event.ROW_SELECTED;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Slf4j
 public class HomePage extends Page {

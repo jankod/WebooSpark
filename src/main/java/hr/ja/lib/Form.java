@@ -87,6 +87,9 @@ public class Form<M> extends Widget {
             }
 
         }
+        if (hasError == null) {
+            hasError = false;
+        }
         return !hasError;
     }
 

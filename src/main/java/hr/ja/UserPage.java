@@ -11,6 +11,8 @@ public class UserPage extends Page {
 
     @UrlPath("/user")
     public PageResponse request() {
-        return PageResponse.show(new H3("User page"));
+
+
+        return show(new H3("User page"));
     }
 }

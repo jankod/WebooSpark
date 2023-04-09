@@ -31,12 +31,19 @@ public class WebooEngine {
     @Getter
     private static Validator validator;
 
-    public static void add(Class<? extends Page> page) {
+    private static PageManager add(Class<? extends Page> page) {
         PageManager pm = new PageManager(page);
         pages.add(pm);
+        return pm;
     }
 
     public static void start(WebSite site, int port) {
+
+        for (Navigation navigation : site.getNavigations()) {
+            PageManager manager = add(navigation.getPageClass());
+            navigation.setUrlPath(manager.getUrlPath());
+        }
+
         WebooEngine.site = site;
         staticFileLocation("/public");
         //staticFiles.externalLocation("/home/tag/IdeaProjects/WebooSpark/WebooSpark/src/main/resources/public");
@@ -55,7 +62,9 @@ public class WebooEngine {
         validator = factory.getValidator();
     }
 
+
     private static Object handlePageRequest(PageManager page, Request request, Response response) {
+        site.setCurrentPage(page.getPage());
         Context.set(request, response, site);
         PageResponse pageResponse = page.createInstance().request();
         return pageResponse.doResponse();

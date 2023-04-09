@@ -1,9 +1,14 @@
 package hr.ja.lib;
 
-import hr.ja.lib.H3;
+public class Html extends Widget {
+    private final String html;
 
-public class Html {
-    public static H3 H3(String text) {
-        return new H3(text);
+    public Html(String html) {
+        this.html = html;
+    }
+
+    @Override
+    public String toHtml() {
+        return html;
     }
 }

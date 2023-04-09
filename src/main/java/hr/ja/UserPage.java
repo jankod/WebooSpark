@@ -11,6 +11,7 @@ public class UserPage extends Page {
 
     @UrlPath("/user")
     public PageResponse request() {
+        Context.site().setTitle("User page");
 
 
         return show(new H3("User page"));

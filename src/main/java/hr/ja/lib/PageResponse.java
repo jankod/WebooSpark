@@ -52,7 +52,7 @@ class ShowPageResponse extends PageResponse {
 
     @Override
     public String doResponse() {
-        String htmlPageBody = MyUtil.toHtml(List.of(widgets));
-        return Context.site().siteLayout(htmlPageBody);
+        //return Context.site().siteLayout(htmlPageBody);
+        return MyUtil.toHtml(List.of(widgets));
     }
 }

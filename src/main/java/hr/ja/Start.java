@@ -9,7 +9,7 @@ public class Start {
     public static void main(String[] args) {
 
 
-        MyWebsite site = new MyWebsite();
+        MyWebsite site = new MyWebsite("My simple website");
         site.addPage(HomePage.class, "Home", Icon.house);
         site.addPage(UserPage.class, "User", Icon.user);
 

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static hr.ja.lib.HtmlUtil.H3;
+import static hr.ja.lib.HtmlUtil.*;
 import static hr.ja.lib.Layout.*;
 import static hr.ja.lib.TableBrowser.Event.ROW_SELECTED;
 
@@ -19,8 +19,6 @@ public class HomePage extends Page {
     @UrlPath("/")
     public PageResponse request() {
         Context.site().setTitle("Home page");
-
-        log.debug("param name {}", Context.request().queryParams("name"));
 
         Form<User> form = createForm();
 
@@ -32,14 +30,13 @@ public class HomePage extends Page {
 
         Table<User> table = createTableData();
         Row row = row(
-              col(
-                    new Card("My table", h3("tu ce biti table"))
+              col4(
+                    new Card(h3("My table", "p-2"), p("tu ce biti table"))
               ),
               col(
-                    new Card(H3("This is form"), form)
+                    new Card(h3("This is form", "p-2"), form)
               ));
 
-        Context.site().setTitle("ssdf");
 
         log.debug("prikaz home page");
 

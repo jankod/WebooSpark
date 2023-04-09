@@ -1,6 +1,5 @@
 package hr.ja.lib;
 
-import hr.ja.HomePage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,19 +10,15 @@ public class WebSite {
 
     @Setter
     @Getter
-    private String title = "?Title?";
+    private String defaultTitle = "?Title?";
 
 
     @Getter
     @Setter
     private String siteName = "Site name";
 
-    @Getter
-    @Setter
-    private Class<? extends Page> currentPage;
 
-
-    public String siteLayout(String pageHtmlBody) {
+    public String siteLayout(String pageHtmlBody, WebSiteParam param) {
         return """
               <!doctype html>
               <html lang="en" data-bs-theme="light">
@@ -80,10 +75,10 @@ public class WebSite {
                             
               </body>
               </html>
-                            """.formatted(MyUtil.escape(title), sidebarNav().toHtml(), pageHtmlBody);
+                            """.formatted(MyUtil.escape(param.getTitle()), sidebarNav(param).toHtml(), pageHtmlBody);
     }
 
-    public Widget sidebarNav() {
+    public Widget sidebarNav(WebSiteParam param) {
 
 
         String html = """

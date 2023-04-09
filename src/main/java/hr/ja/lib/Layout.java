@@ -10,9 +10,14 @@ public class Layout {
         return new Col(widgets);
     }
 
-
-    public static H3 h3(String text) {
-        return new H3(text);
+    public static Col col4(Widget... widgets) {
+        return col(widgets).setClasses("col-4");
     }
+
+    public static Col col2(Widget... widgets) {
+        return col(widgets).setClasses("col-2");
+    }
+
+
 
 }

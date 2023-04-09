@@ -19,7 +19,7 @@ import static spark.Spark.*;
 public class WebooEngine {
 
 
-    private static WebSite site = new WebSite();
+    private static WebSite site;
 
     @Getter
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -60,14 +60,21 @@ public class WebooEngine {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
+
+
     }
 
 
     private static Object handlePageRequest(PageManager page, Request request, Response response) {
-        site.setCurrentPage(page.getPage());
-        Context.set(request, response, site);
+        WebSiteParam param = new WebSiteParam();
+        param.setCurrentPage(page.getPage());
+        Context.set(request, response, param);
         PageResponse pageResponse = page.createInstance().request();
-        return pageResponse.doResponse();
+        String resHtml = pageResponse.doResponse();
+        if (resHtml != null) {
+            return site.siteLayout(resHtml, param);
+        }
+        return null;
     }
 
     public static String getUrlPath(Class<? extends Page> page) {
